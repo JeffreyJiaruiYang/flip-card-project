@@ -18,27 +18,23 @@ jobs:
        id-token: write
        contents: read
     steps:
-      # Step 1: Checkout the code
+
       - uses: actions/checkout@v3
         with:
           submodules: false
           lfs: false
 
-      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # Step 3: Install dependencies
       - name: Install Dependencies
         run: npm install
 
-      # Step 4: Build the project
       - name: Build Project
         run: npm run build
 
-      # Step 5: Deploy to Azure Static Web Apps
       id: builddeploy
       uses: Azure/static-web-apps-deploy@v1
       with:

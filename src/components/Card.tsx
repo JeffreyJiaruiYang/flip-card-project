@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Card.css'; // 样式文件
 
 interface CardProps {

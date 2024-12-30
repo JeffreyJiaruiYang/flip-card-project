@@ -28,6 +28,7 @@ function App() {
 
   return (
     <div className="app">
+      <h1>欢迎来到维基萌抽卡</h1>
       {/* 搜索输入框 */}
       <input
         type="text"

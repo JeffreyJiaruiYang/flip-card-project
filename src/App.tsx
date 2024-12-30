@@ -27,30 +27,35 @@ function App() {
   });
 
   return (
-    <div className="app">
-      <h1>欢迎来到fishbone抽卡</h1>
-      {/* 搜索输入框 */}
-      <input
-        type="text"
-        placeholder="Search cards..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="search-bar"
-      />
-
-      {/* 排序按钮 */}
-      <button onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}>
-        Sort: {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
-      </button>
-
-      {/* 卡牌列表 */}
-      <div className="card-list">
-        {sortedCards.map((card) => (
-          <Card key={card.id} frontImage={card.front} backImage={card.back} />
-        ))}
-      </div>
+    <div className="app-container">
+      <header className="app-header">
+        <h1>欢迎来到fishbone抽卡</h1>
+        <div className="controls">
+          <input
+            type="text"
+            placeholder="Search cards..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-bar"
+          />
+          <button 
+            onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+            className="sort-button"
+          >
+            Sort: {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
+          </button>
+        </div>
+      </header>
+      <main className="card-list-container">
+        <div className="card-list">
+          {sortedCards.map((card) => (
+            <Card key={card.id} frontImage={card.front} backImage={card.back} />
+          ))}
+        </div>
+      </main>
     </div>
   );
+  
 }
 
 export default App;

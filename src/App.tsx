@@ -68,7 +68,11 @@ function App() {
           </div>
         </header>
 
-        <div className="card-grid">
+        <div className="draw-instruction">
+          <p>点击下方卡牌即可抽卡，今日还可抽3次！</p>
+        </div>
+
+        <div className="card-row">
           {sortedCards.map((card) => (
             <Card key={card.id} frontImage={card.front} backImage={card.back} />
           ))}

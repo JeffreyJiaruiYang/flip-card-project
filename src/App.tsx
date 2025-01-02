@@ -28,26 +28,47 @@ function App() {
 
   return (
     <div className="app-container">
-      <header className="app-header">
-        <h1>欢迎来到fishbone抽卡</h1>
-        <div className="controls">
-          <input
-            type="text"
-            placeholder="Search cards..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="search-bar"
-          />
-          <button 
-            onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-            className="sort-button"
-          >
-            Sort: {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
+      <nav className="menu-bar">
+        <div className="logo">
+          <h2>Fishbone Cards</h2>
+        </div>
+        <div className="menu-items">
+          <a href="#home" className="menu-item active">Home</a>
+          <a href="#collection" className="menu-item">My Collection</a>
+          <a href="#shop" className="menu-item">Shop</a>
+        </div>
+        <div className="user-section">
+          <button className="user-button">
+            <i className="fas fa-user"></i>
           </button>
         </div>
-      </header>
-      <main className="card-list-container">
-        <div className="card-list">
+      </nav>
+
+      <main className="content">
+        <header className="content-header">
+          <h1>Welcome to Fishbone Cards</h1>
+          <div className="controls">
+            <div className="search-container">
+              <i className="fas fa-search search-icon"></i>
+              <input
+                type="text"
+                placeholder="Search cards..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-bar"
+              />
+            </div>
+            <button 
+              onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+              className="sort-button"
+            >
+              <i className={`fas fa-sort-${sortOrder === 'asc' ? 'up' : 'down'}`}></i>
+              {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
+            </button>
+          </div>
+        </header>
+
+        <div className="card-grid">
           {sortedCards.map((card) => (
             <Card key={card.id} frontImage={card.front} backImage={card.back} />
           ))}
@@ -55,7 +76,6 @@ function App() {
       </main>
     </div>
   );
-  
 }
 
 export default App;

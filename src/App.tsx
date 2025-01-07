@@ -5,6 +5,11 @@ import './App.css';
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [cardHistory, setCardHistory] = useState<Array<{
+    id: number;
+    name: string;
+    timestamp: Date;
+  }>>([]);
 
   const cards = [
     { id: 1, front: '/images/front1.jpg', back: '/images/back1.jpg', name: 'Card A' },
@@ -33,9 +38,10 @@ function App() {
           <h2>Fishbone Cards</h2>
         </div>
         <div className="menu-items">
-          <a href="#home" className="menu-item active">Home</a>
-          <a href="#collection" className="menu-item">My Collection</a>
-          <a href="#shop" className="menu-item">Shop</a>
+          <a href="/" className="menu-item active">Home</a>
+          <a href="/collection" className="menu-item">My Collection</a>
+          <a href="/my-cards" className="menu-item">My Cards</a>
+          <a href="/shop" className="menu-item">Shop</a>
         </div>
         <div className="user-section">
           <button className="user-button">
@@ -72,9 +78,25 @@ function App() {
           <p>点击下方卡牌即可抽卡，今日还可抽3次！</p>
         </div>
 
-        <div className="card-row">
+        <div className="card-row" style={{ 
+          display: 'flex', 
+          justifyContent: 'space-around',
+          width: '100%',
+          padding: '20px'
+        }}>
           {sortedCards.map((card) => (
-            <Card key={card.id} frontImage={card.front} backImage={card.back} />
+            <Card 
+              key={card.id} 
+              frontImage={card.front} 
+              backImage={card.back}
+              onClick={() => {
+                setCardHistory(prev => [...prev, {
+                  id: card.id,
+                  name: card.name,
+                  timestamp: new Date()
+                }]);
+              }}
+            />
           ))}
         </div>
       </main>

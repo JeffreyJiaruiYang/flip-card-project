@@ -4,10 +4,11 @@ import './Card.css'; // 样式文件
 interface CardProps {
   frontImage: string;
   backImage: string;
+  onClick?: () => void;
 }
 
 const Card: React.FC<CardProps> = ({ frontImage, backImage }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(true);
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);

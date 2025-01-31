@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Card from './components/Card';
 import './App.css';
+import { BlobServiceClient } from '@azure/storage-blob';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,10 +13,30 @@ function App() {
   }>>([]);
   const [activeTab, setActiveTab] = useState('home');
 
+  // Add Azure Storage configuration
+  const sasToken = process.env.REACT_APP_AZURE_SAS_TOKEN;
+  const storageAccountName = process.env.REACT_APP_STORAGE_ACCOUNT_NAME;
+  const containerName = 'cards'; // Your container name
+
   const cards = [
-    { id: 1, front: '/images/front1.jpg', back: '/images/back1.jpg', name: 'Card A' },
-    { id: 2, front: '/images/front2.jpg', back: '/images/back1.jpg', name: 'Card B' },
-    { id: 3, front: '/images/front3.jpg', back: '/images/back1.jpg', name: 'Card C' },
+    { 
+      id: 1, 
+      front: `https://${storageAccountName}.blob.core.windows.net/${containerName}/front1.jpg${sasToken}`,
+      back: `https://${storageAccountName}.blob.core.windows.net/${containerName}/back1.jpg${sasToken}`,
+      name: 'Card A' 
+    },
+    { 
+      id: 2, 
+      front: `https://${storageAccountName}.blob.core.windows.net/${containerName}/front2.jpg${sasToken}`,
+      back: `https://${storageAccountName}.blob.core.windows.net/${containerName}/back1.jpg${sasToken}`,
+      name: 'Card B' 
+    },
+    { 
+      id: 3, 
+      front: `https://${storageAccountName}.blob.core.windows.net/${containerName}/front3.jpg${sasToken}`,
+      back: `https://${storageAccountName}.blob.core.windows.net/${containerName}/back1.jpg${sasToken}`,
+      name: 'Card C' 
+    },
   ];
 
   // 搜索过滤

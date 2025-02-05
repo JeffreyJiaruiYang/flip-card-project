@@ -13,8 +13,8 @@ function App() {
   const [activeTab, setActiveTab] = useState('home');
 
   // Add Azure Storage configuration
-  const sasToken = process.env.REACT_APP_AZURE_SAS_TOKEN;
-  const storageAccountName = process.env.REACT_APP_STORAGE_ACCOUNT_NAME;
+  const sasToken = import.meta.env.VITE_AZURE_SAS_TOKEN;
+  const storageAccountName = import.meta.env.VITE_STORAGE_ACCOUNT_NAME;
   const containerName = 'cards'; // Your container name
 
   const cards = [
@@ -85,7 +85,27 @@ function App() {
           </div>
         );
       case 'collection':
-        return <div className="tab-content"><h2>My Collection</h2><p>Your collected cards will appear here.</p></div>;
+        return (
+          <div className="tab-content">
+            <h2>My Collection</h2>
+            <div className="history-list">
+              {cardHistory.map((record, index) => (
+                <div key={index} className="history-item" style={{
+                  padding: '10px',
+                  margin: '5px 0',
+                  backgroundColor: '#f5f5f5',
+                  borderRadius: '5px'
+                }}>
+                  <p>Card: {record.name}</p>
+                  <p>Drawn at: {record.timestamp.toLocaleString()}</p>
+                </div>
+              ))}
+              {cardHistory.length === 0 && (
+                <p>No cards collected yet. Try drawing some cards!</p>
+              )}
+            </div>
+          </div>
+        );
       case 'my-cards':
         return <div className="tab-content"><h2>My Cards</h2><p>Your owned cards will appear here.</p></div>;
       case 'shop':

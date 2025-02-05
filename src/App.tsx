@@ -14,8 +14,8 @@ function App() {
   const [activeTab, setActiveTab] = useState('home');
 
   // Add Azure Storage configuration
-  const sasToken = process.env.REACT_APP_AZURE_SAS_TOKEN;
-  const storageAccountName = process.env.REACT_APP_STORAGE_ACCOUNT_NAME;
+  const sasToken = import.meta.env.VITE_AZURE_SAS_TOKEN;
+  const storageAccountName = import.meta.env.VITE_STORAGE_ACCOUNT_NAME;
   const containerName = 'cards'; // Your container name
 
   const cards = [

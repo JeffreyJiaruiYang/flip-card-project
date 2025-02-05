@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Card from './components/Card';
 import './App.css';
+import { cardService } from './services/cardService';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -11,6 +12,7 @@ function App() {
     timestamp: Date;
   }>>([]);
   const [activeTab, setActiveTab] = useState('home');
+  const [userId] = useState('user1'); // 临时用户ID，之后可以改用认证系统
 
   // Add Azure Storage configuration
   const sasToken = import.meta.env.VITE_AZURE_SAS_TOKEN;
@@ -52,6 +54,39 @@ function App() {
     }
   });
 
+  // 修改卡片点击处理
+  const handleCardClick = async (cardId: number) => {
+    const newState = {
+      userId,
+      cardId,
+      isFlipped: true,
+      lastUpdated: new Date()
+    };
+    
+    await cardService.saveCardState(newState);
+    setCardHistory(prev => [...prev, {
+      id: cardId,
+      name: cards.find(c => c.id === cardId)?.name || '',
+      timestamp: new Date()
+    }]);
+  };
+
+  // 加载卡片状态
+  useEffect(() => {
+    const loadCardStates = async () => {
+      const states = await cardService.getCardStates(userId);
+      // 更新UI状态
+      const history = states.map(state => ({
+        id: state.cardId,
+        name: cards.find(c => c.id === state.cardId)?.name || '',
+        timestamp: state.lastUpdated
+      }));
+      setCardHistory(history);
+    };
+
+    loadCardStates();
+  }, [userId]);
+
   // Add this component for dummy content
   const TabContent = () => {
     switch (activeTab) {
@@ -72,13 +107,7 @@ function App() {
                   key={card.id} 
                   frontImage={card.front} 
                   backImage={card.back}
-                  onClick={() => {
-                    setCardHistory(prev => [...prev, {
-                      id: card.id,
-                      name: card.name,
-                      timestamp: new Date()
-                    }]);
-                  }}
+                  onClick={() => handleCardClick(card.id)}
                 />
               ))}
             </div>

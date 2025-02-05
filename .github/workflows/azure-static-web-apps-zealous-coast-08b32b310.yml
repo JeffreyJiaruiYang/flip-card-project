@@ -29,6 +29,7 @@ jobs:
         env:
           VITE_STORAGE_ACCOUNT_NAME: ${{ secrets.VITE_STORAGE_ACCOUNT_NAME }}
           VITE_AZURE_SAS_TOKEN: ${{ secrets.VITE_AZURE_SAS_TOKEN }}
+          VITE_COSMOS_CONNECTION_STRING: ${{ secrets.VITE_COSMOS_CONNECTION_STRING }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

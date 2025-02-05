@@ -60,7 +60,7 @@ function App() {
         return (
           <div>
             <div className="draw-instruction">
-              <p>点击下方卡牌即可抽卡，今日还可抽3次！</p>
+              <p>点击下方卡牌即可抽卡, 今日还可抽3次!</p>
             </div>
             <div className="card-row" style={{ 
               display: 'flex', 
